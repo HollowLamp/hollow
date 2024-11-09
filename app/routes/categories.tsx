@@ -6,7 +6,7 @@ import { Category } from "~/api/category/type";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "分类列表 - 空心灯的星空" },
+    { title: "分类 - 空心灯的星空" },
     { name: "description", content: "浏览所有文章分类和对应的文章数量。" },
   ];
 };

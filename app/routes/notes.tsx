@@ -1,22 +1,13 @@
 import { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { getPublishedNotes } from "~/api/note/noteApi";
-import { PaginatedNotes, Note } from "~/api/note/type";
+import { PaginatedNotes } from "~/api/note/type";
 import NoteListItem from "~/components/NoteListItem";
 
-export const meta: MetaFunction = ({ data }) => {
-  const note = data as Note | undefined;
-
+export const meta: MetaFunction = () => {
   return [
-    {
-      title: note
-        ? `${note.title} - 空心灯的星空`
-        : "随笔未找到 - 空心灯的星空",
-    },
-    {
-      name: "description",
-      content: note ? `${note.title} 的随笔内容` : "该文章不存在或已被删除",
-    },
+    { title: "随笔 - 空心灯的星空" },
+    { name: "description", content: "浏览随笔。" },
   ];
 };
 
