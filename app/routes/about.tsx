@@ -56,10 +56,7 @@ export default function AboutPage() {
         </div>
         <h1 className="text-3xl font-bold mb-6 text-center mt-8">关于本站</h1>
         <div className="max-w-2xl text-lg text-gray-700 leading-relaxed">
-          <p>
-            remix, react, tailwind, nest +
-            chatgpt堆砌出来的赶工作品，截止目前还有太多幻想中的功能没有实现，感兴趣的可以移步本站第一篇文章
-          </p>
+          <p>remix, react, tailwind, nest + chatgpt堆出来的东西</p>
         </div>
       </div>
     </div>
