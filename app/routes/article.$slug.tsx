@@ -1,5 +1,5 @@
 import { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { getPublishedArticleBySlug } from "~/api/article/articleApi";
 import { Article } from "~/api/article/type";
 import ContentDisplay from "~/components/ContentDisplay";
@@ -44,6 +44,9 @@ export default function ArticleDetail() {
         createdAt={article.createdAt}
         updateAt={article.updatedAt}
       />
+      <div className="mt-8">
+        <Outlet />
+      </div>
     </div>
   );
 }

@@ -82,6 +82,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
               友链
             </Link>
             <span className="text-gray-300">|</span>
+            <Link to="/comments" className="hover:text-blue-400">
+              留言
+            </Link>
+            <span className="text-gray-300">|</span>
             <Link to="/about" className="hover:text-blue-400">
               关于
             </Link>

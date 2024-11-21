@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { getPublishedNoteById } from "~/api/note/noteApi";
 import { Note } from "~/api/note/type";
 import ContentDisplay from "~/components/ContentDisplay";
@@ -20,13 +20,18 @@ export default function NoteDetail() {
   const note = useLoaderData<Note>();
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <ContentDisplay
-        title={note.title}
-        content={note.content}
-        createdAt={note.createdAt}
-        updateAt={note.updatedAt}
-      />
-    </div>
+    <>
+      <div className="container mx-auto px-4 py-8">
+        <ContentDisplay
+          title={note.title}
+          content={note.content}
+          createdAt={note.createdAt}
+          updateAt={note.updatedAt}
+        />
+        <div className="mt-8">
+          <Outlet />
+        </div>
+      </div>
+    </>
   );
 }

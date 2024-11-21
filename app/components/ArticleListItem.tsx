@@ -9,7 +9,7 @@ export default function ArticleListItem({ article }: ArticleListItemProps) {
   return (
     <li className="hover:bg-gray-100 transition duration-200">
       <Link
-        to={`/article/${article.slug}`}
+        to={`/article/${article.slug}/comments`}
         className="flex justify-between items-center py-2 px-4 border-b w-full"
       >
         <span className="text-gray-500 text-sm">

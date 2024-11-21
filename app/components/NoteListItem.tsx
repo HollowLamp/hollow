@@ -9,7 +9,7 @@ export default function NoteListItem({ note }: NoteListItemProps) {
   return (
     <li className="hover:bg-gray-100 transition duration-200">
       <Link
-        to={`/note/${note.id}`}
+        to={`/note/${note.id}/comments`}
         className="flex justify-between items-center py-2 px-4 border-b w-full"
       >
         <span className="text-gray-500 text-sm">
