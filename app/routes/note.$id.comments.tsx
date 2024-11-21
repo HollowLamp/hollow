@@ -5,6 +5,7 @@ import {
   FetcherWithComponents,
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { UAParser } from "ua-parser-js";
 import { createComment, getCommentsByNoteId } from "~/api/comment/commentApi";
 import { Comment } from "~/api/comment/type";
 import CommentList from "~/components/CommentList";
@@ -39,6 +40,18 @@ export async function action({
   const website = formData.get("website") as string;
   const avatarUrl = formData.get("avatarUrl") as string;
 
+  const clientIp = request.headers.get("x-forwarded-for") || "unknown";
+  const rawUserAgent = request.headers.get("user-agent") || "unknown";
+
+  const parser = new UAParser(rawUserAgent);
+  const browser = parser.getBrowser();
+  const os = parser.getOS();
+  const device = parser.getDevice();
+
+  const userAgent = `${browser.name || "Unknown Browser"} ${
+    browser.version || ""
+  } on ${os.name || "Unknown OS"} ${device.type ? `(${device.type})` : ""}`;
+
   if (!content) {
     return json({ error: "评论内容不能为空" }, { status: 400 });
   }
@@ -51,6 +64,8 @@ export async function action({
       website: website || undefined,
       avatarUrl: avatarUrl || undefined,
       noteId: parseInt(params.id),
+      clientIp: clientIp,
+      userAgent: userAgent,
     });
     return json({ success: true });
   } catch (error) {
@@ -183,7 +198,9 @@ export default function ArticleComments() {
           <p className="text-green-500 mt-4">评论提交成功！</p>
         )}
         {fetcher.data?.error && (
-          <p className="text-red-500 mt-4">提交评论失败，请稍后重试！</p>
+          <p className="text-red-500 mt-4">
+            提交评论失败，请检查是否包含非法字符和网络环境！
+          </p>
         )}
       </fetcher.Form>
 

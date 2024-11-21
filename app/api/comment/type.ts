@@ -22,6 +22,8 @@ export interface CreateCommentDto {
   articleSlug?: string;
   noteId?: number;
   thoughtId?: number;
+  clientIp?: string;
+  userAgent?: string;
 }
 
 export interface PaginatedComments {

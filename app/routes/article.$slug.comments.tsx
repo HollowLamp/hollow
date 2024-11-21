@@ -41,6 +41,9 @@ export async function action({
   const website = formData.get("website") as string;
   const avatarUrl = formData.get("avatarUrl") as string;
 
+  const clientIp = request.headers.get("x-forwarded-for") || "unknown";
+  const userAgent = request.headers.get("user-agent") || "unknown";
+
   if (!content) {
     return json({ error: "评论内容不能为空" }, { status: 400 });
   }
@@ -53,6 +56,8 @@ export async function action({
       website: website || undefined,
       avatarUrl: avatarUrl || undefined,
       articleSlug: params.slug,
+      clientIp: clientIp,
+      userAgent: userAgent,
     });
     return json({ success: true });
   } catch (error) {
@@ -185,7 +190,9 @@ export default function ArticleComments() {
           <p className="text-green-500 mt-4">评论提交成功！</p>
         )}
         {fetcher.data?.error && (
-          <p className="text-red-500 mt-4">提交评论失败，请稍后重试！</p>
+          <p className="text-red-500 mt-4">
+            提交评论失败，请检查是否包含非法字符和网络环境！
+          </p>
         )}
       </fetcher.Form>
 
