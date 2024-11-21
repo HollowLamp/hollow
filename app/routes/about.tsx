@@ -16,7 +16,6 @@ export default function AboutPage() {
         <div className="max-w-2xl text-lg text-gray-700 leading-relaxed">
           <p>普通人，爱摸鱼</p>
           <p>经常出没在这些地方</p>
-          <p>因为评论功能未实现，需要联系请通过知乎私信</p>
         </div>
 
         <div className="flex space-x-4 mt-8">
