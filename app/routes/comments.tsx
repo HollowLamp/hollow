@@ -5,6 +5,7 @@ import {
   FetcherWithComponents,
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import { UAParser } from "ua-parser-js";
 import {
   getIndependentComments,
   createComment,
@@ -38,7 +39,16 @@ export async function action({ request }: { request: Request }) {
   const avatarUrl = formData.get("avatarUrl") as string;
 
   const clientIp = request.headers.get("x-forwarded-for") || "unknown";
-  const userAgent = request.headers.get("user-agent") || "unknown";
+  const rawUserAgent = request.headers.get("user-agent") || "unknown";
+
+  const parser = new UAParser(rawUserAgent);
+  const browser = parser.getBrowser();
+  const os = parser.getOS();
+  const device = parser.getDevice();
+
+  const userAgent = `${browser.name || "Unknown Browser"} ${
+    browser.version || ""
+  } on ${os.name || "Unknown OS"} ${device.type ? `(${device.type})` : ""}`;
 
   if (!content) {
     return json({ error: "评论内容不能为空" }, { status: 400 });
