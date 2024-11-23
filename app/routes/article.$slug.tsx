@@ -22,14 +22,17 @@ export const meta: MetaFunction = ({ data }) => {
   ];
 };
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const { slug } = params;
+
+  const clientIp =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
 
   if (!slug) {
     throw new Error("文章 slug 缺失");
   }
 
-  const article = await getPublishedArticleBySlug(slug);
+  const article = await getPublishedArticleBySlug(slug, clientIp);
   return article;
 }
 

@@ -15,8 +15,15 @@ export async function getPublishedNotes(
   return data.data;
 }
 
-export async function getPublishedNoteById(id: number): Promise<Note> {
-  const response = await fetch(`${API_BASE_URL}/notes/${id}`);
+export async function getPublishedNoteById(
+  id: number,
+  clientIp: string
+): Promise<Note> {
+  const response = await fetch(`${API_BASE_URL}/notes/${id}`, {
+    headers: {
+      ...(clientIp ? { "X-Client-IP": clientIp } : {}),
+    },
+  });
   if (!response.ok) {
     throw new Error(`获取随笔失败 ${id}`);
   }

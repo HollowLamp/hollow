@@ -16,9 +16,14 @@ export async function getPublishedArticles(
 }
 
 export async function getPublishedArticleBySlug(
-  slug: string
+  slug: string,
+  clientIp: string
 ): Promise<Article> {
-  const response = await fetch(`${API_BASE_URL}/articles/${slug}`);
+  const response = await fetch(`${API_BASE_URL}/articles/${slug}`, {
+    headers: {
+      ...(clientIp ? { "X-Client-IP": clientIp } : {}),
+    },
+  });
   if (!response.ok) {
     throw new Error(`获取文章失败 slug ${slug}`);
   }

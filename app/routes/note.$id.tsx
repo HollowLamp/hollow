@@ -4,14 +4,18 @@ import { getPublishedNoteById } from "~/api/note/noteApi";
 import { Note } from "~/api/note/type";
 import ContentDisplay from "~/components/ContentDisplay";
 
-export async function loader({ params }: LoaderFunctionArgs) {
+export async function loader({ request, params }: LoaderFunctionArgs) {
   const { id } = params;
+
+  const clientIp =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+
   if (!id) {
     throw new Error("随笔 ID 缺失");
   }
 
   const noteId = parseInt(id, 10);
-  const note = await getPublishedNoteById(noteId);
+  const note = await getPublishedNoteById(noteId, clientIp);
 
   return note;
 }
