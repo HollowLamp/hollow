@@ -20,7 +20,7 @@ export default function Categories() {
   const categories = useLoaderData<Category[]>();
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 max-w-3xl">
       <h1 className="text-3xl font-bold mb-4">分类</h1>
       <ul>
         {categories.map((category) => (

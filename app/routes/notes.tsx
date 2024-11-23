@@ -26,7 +26,7 @@ export default function NoteList() {
   }>();
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 max-w-3xl">
       <h1 className="text-3xl font-bold mb-4">随笔</h1>
       <ul>
         {data.data.map((note) => (

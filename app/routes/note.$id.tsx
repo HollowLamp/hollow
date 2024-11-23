@@ -27,6 +27,7 @@ export default function NoteDetail() {
           content={note.content}
           createdAt={note.createdAt}
           updateAt={note.updatedAt}
+          views={note.views}
         />
         <div className="mt-8">
           <Outlet />

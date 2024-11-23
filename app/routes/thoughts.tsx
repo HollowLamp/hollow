@@ -80,7 +80,7 @@ export default function ThoughtList() {
   }, [hasMore, loadMoreThoughts, isClient]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 max-w-3xl">
       <h1 className="text-3xl font-bold mb-4">说说</h1>
       <ul className="space-y-4">
         {thoughts.map((thought) => (
