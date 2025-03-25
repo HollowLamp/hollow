@@ -38,29 +38,29 @@ export default function ThoughtList() {
   }, []);
 
   const loadMoreThoughts = useCallback(() => {
-    if (fetcher.state === "loading" || !hasMore) return;
+    if (fetcher.state !== "idle" || !hasMore) return;
     fetcher.load(`/thoughts?page=${page}`);
   }, [fetcher, hasMore, page]);
 
   useEffect(() => {
     if (fetcher.data) {
-      const nextData = fetcher.data as PaginatedThoughts;
+      const { data: nextData } = fetcher.data as { data: PaginatedThoughts };
       if (nextData.data.length > 0) {
         setThoughts((prevThoughts) => [...prevThoughts, ...nextData.data]);
         setPage((prevPage) => prevPage + 1);
-        setHasMore(nextData.data.length === initialData.limit);
+        setHasMore(thoughts.length + nextData.data.length < nextData.total);
       } else {
         setHasMore(false);
       }
     }
-  }, [fetcher.data, initialData.limit]);
+  }, [fetcher.data]);
 
   useEffect(() => {
     if (!isClient) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && hasMore) {
+        if (entries[0].isIntersecting && hasMore && fetcher.state === "idle") {
           loadMoreThoughts();
         }
       },
@@ -77,7 +77,7 @@ export default function ThoughtList() {
         observer.unobserve(currentLoaderRef);
       }
     };
-  }, [hasMore, loadMoreThoughts, isClient]);
+  }, [hasMore, loadMoreThoughts, isClient, fetcher.state]);
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
